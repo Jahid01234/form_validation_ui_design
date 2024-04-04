@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
             Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
+              decoration:const BoxDecoration(
                   gradient: LinearGradient(
                       colors: [
                         Color(0xffB81736),
@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
                   )
               ),
         
-              child: Padding(
+              child:const Padding(
                 padding: const EdgeInsets.only(top: 60,left: 22),
                 child: Text("Hello\n       Sign In",style: TextStyle
                   (
