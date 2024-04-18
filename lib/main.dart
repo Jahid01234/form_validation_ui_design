@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:form_validation_ui_design/HomePage.dart';
+import 'package:form_validation_ui_design/onBoardingScreen.dart';
 import 'package:form_validation_ui_design/splashScreen.dart';
+
+import 'RegistrationPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,6 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Form Validation Ui Design',
       debugShowCheckedModeBanner: false,
       home: splashScreen(),
+
     );
   }
 }

@@ -1,9 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:form_validation_ui_design/HomePage.dart';
+import 'package:form_validation_ui_design/onBoardingScreen.dart';
 
 class splashScreen extends StatefulWidget {
   const splashScreen({super.key});
@@ -18,7 +17,7 @@ class _splashScreenState extends State<splashScreen> {
   @override
   void initState() {
     Timer(Duration(seconds: 3),(){
-      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>HomePage()));
+      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>onBoardingScreen()));
     });
     super.initState();
   }
