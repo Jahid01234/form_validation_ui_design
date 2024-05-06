@@ -38,6 +38,10 @@ dependencies:
   icons_plus: ^4.0.0
   animated_text_kit: ^4.2.2
   introduction_screen: ^3.1.12
+  firebase_core: ^2.30.0
+  firebase_auth: ^4.19.2
+  cloud_firestore: ^4.17.0
+  google_sign_in: ^6.2.1
 
 dev_dependencies:
   flutter_test:

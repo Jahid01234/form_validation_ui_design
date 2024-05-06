@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validation_ui_design/LoginPage.dart';
 import 'package:form_validation_ui_design/RegistrationPage.dart';
+import 'package:form_validation_ui_design/services/auth_method.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class HomePage extends StatefulWidget {
@@ -108,7 +109,12 @@ class _HomePageState extends State<HomePage> {
                   Logo(Logos.facebook_logo),
                   Logo(Logos.instagram),
                   Logo(Logos.twitter),
-                  Logo(Logos.chrome),
+                  InkWell(
+                    onTap: (){
+                      AuthMethods().signInWithGoogle(context);
+                    },
+                      child: Logo(Logos.google)
+                  ),
                 ],
               )
         

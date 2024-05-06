@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "405740710757",
+    "project_id": "my-first-project-9ad78",
+    "storage_bucket": "my-first-project-9ad78.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:405740710757:android:753a120f0ebbb8bc540f8c",
+        "android_client_info": {
+          "package_name": "com.example.form_validation_ui_design"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0jviX6ea7a3somapYtbYCnsuKL6BfJuI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,7 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validation_ui_design/Custom_design/showDialog_message.dart';
 import 'package:form_validation_ui_design/RegistrationPage.dart';
 import 'package:form_validation_ui_design/WelcomePage.dart';
+import 'package:form_validation_ui_design/forget_password.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,11 +20,57 @@ class _LoginPageState extends State<LoginPage> {
   bool _obscureText1 = true;
 
 
-  TextEditingController  _emailController = TextEditingController();
-  TextEditingController  _passwordController = TextEditingController();
+  final TextEditingController   _emailController = TextEditingController();
+  final TextEditingController  _passwordController = TextEditingController();
 
 
   final _userkey = GlobalKey<FormState>();
+
+  // Firebase Login method
+  void loginUser() async{
+    // 1st part
+    // show loading circle
+    showDialog(
+        context: context,
+        builder: (context){
+          return const Center(child: CircularProgressIndicator());
+        }
+    );
+
+    // 2nd part
+    // try sign In
+    try{
+      await FirebaseAuth.instance.signInWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
+
+      // pop loading circle
+      Navigator.pop(context);
+
+      // show success message to user
+      displayMessageToUser("LogIn successful!", context);
+
+      // Delay dismissing the dialog for 2 seconds
+      Timer(const Duration(seconds: 2), () {
+        Navigator.pop(context); // Dismiss the success dialog
+       // if (context.mounted) Navigator.push(context, MaterialPageRoute(builder: (context)=>WelcomePage()));// Navigate to login page
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>WelcomePage()));
+      });
+
+    } on FirebaseAuthException catch(e){
+      // pop loading circle
+      Navigator.pop(context);
+
+      //show error message to user
+      displayMessageToUser(e.code, context);
+
+      // Delay dismissing the dialog for 3 seconds
+      Timer(const Duration(seconds: 2), () {
+        Navigator.pop(context); // Dismiss the error dialog
+      });
+    }
+
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +78,7 @@ class _LoginPageState extends State<LoginPage> {
       body: SafeArea(
         child: Stack(
           children: [
+            // 1st stack part
             Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
@@ -42,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
         
               child:const Padding(
-                padding: const EdgeInsets.only(top: 60,left: 22),
+                padding:  EdgeInsets.only(top: 60,left: 22),
                 child: Text("Hello\n       Sign In",style: TextStyle
                   (
                   fontSize: 30,
@@ -52,7 +102,9 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-        
+
+
+            // 2nd stack part
             Padding(
               padding: const EdgeInsets.only(top: 200),
               child: Container(
@@ -60,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                     color: Colors.grey[300],
-                    borderRadius: BorderRadius.only(
+                    borderRadius:const BorderRadius.only(
                         topLeft: Radius.circular(40),
                         topRight: Radius.circular(40)
                     )
@@ -77,10 +129,10 @@ class _LoginPageState extends State<LoginPage> {
                           child: Column(
                             children: [
 
-                              SizedBox(height: 50),
+                             const SizedBox(height: 50),
 
                               // 2nd gmail part
-                              SizedBox(height: 20),
+                              const SizedBox(height: 20),
                               Container(
                                 height: 60,
                                 width: MediaQuery.of(context).size.width,
@@ -95,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                                           offset: Offset(4,4)
                                       ),
 
-                                      BoxShadow(
+                                     const BoxShadow(
                                           color: Colors.white,
                                           spreadRadius: 1,
                                           blurRadius: 15,
@@ -116,11 +168,11 @@ class _LoginPageState extends State<LoginPage> {
                                         }
                                       },
                                       keyboardType: TextInputType.emailAddress,
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         hintText: "Enter Your Gmail",
                                         hintStyle: TextStyle(color: Colors.blue),
                                         border: InputBorder.none,
-                                        prefixIcon: Icon(Icons.person,color: Colors.cyan,),
+                                        prefixIcon: Icon(Icons.email,color: Colors.cyan,),
                                       ),
 
                                     ),
@@ -130,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
 
 
                               // 3rd Password part
-                              SizedBox(height: 20),
+                              const SizedBox(height: 20),
                               Container(
                                 height: 60,
                                 width: MediaQuery.of(context).size.width,
@@ -145,7 +197,7 @@ class _LoginPageState extends State<LoginPage> {
                                           offset: Offset(4,4)
                                       ),
 
-                                      BoxShadow(
+                                      const BoxShadow(
                                           color: Colors.white,
                                           spreadRadius: 1,
                                           blurRadius: 15,
@@ -193,12 +245,12 @@ class _LoginPageState extends State<LoginPage> {
                               ),
 
 
-                              SizedBox(height: 18),
+                              const SizedBox(height: 18),
                               InkWell(
                                 onTap: (){
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Forget password")));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgetPassword()));
                                 },
-                                child: Align(
+                                child: const Align(
                                   alignment: Alignment.centerRight,
                                   child: Text('Forget Password?',style: TextStyle(
                                       fontSize: 17,
@@ -209,11 +261,11 @@ class _LoginPageState extends State<LoginPage> {
                               ),
 
 
-                              SizedBox(height: 70,),
+                              const SizedBox(height: 70,),
                               GestureDetector(
                                 onTap: (){
                                   if (_userkey.currentState!.validate()) {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomePage()));
+                                    loginUser();
                                   }
                                 },
                                 child: Container(
@@ -230,7 +282,7 @@ class _LoginPageState extends State<LoginPage> {
                                             offset: Offset(4,4)
                                         ),
 
-                                        BoxShadow(
+                                        const BoxShadow(
                                             color: Colors.white,
                                             spreadRadius: 1,
                                             blurRadius: 15,
@@ -238,7 +290,7 @@ class _LoginPageState extends State<LoginPage> {
                                         )
                                       ]
                                   ),
-                                  child: Center(child: Text('SIGN IN',
+                                  child: const Center(child: Text('SIGN IN',
                                     style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.cyan,
@@ -251,12 +303,12 @@ class _LoginPageState extends State<LoginPage> {
                               ),
 
                               // Then text in side...........
-                              SizedBox(height: 20),
+                              const SizedBox(height: 20),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text("Don't have an account?",style: TextStyle(
+                                 const  Text("Don't have an account?",style: TextStyle(
                                       color: Colors.grey,
                                       fontWeight: FontWeight.bold
                                   ),
@@ -265,7 +317,7 @@ class _LoginPageState extends State<LoginPage> {
                                   TextButton(onPressed: (){
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationPage()));
                                   },
-                                    child: Text("Sign Up",style: TextStyle(
+                                    child:const Text("Sign Up",style: TextStyle(
                                         fontSize: 15,
                                         color: Colors.teal,
                                         fontWeight: FontWeight.bold
